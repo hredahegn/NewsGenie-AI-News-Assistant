@@ -1,0 +1,47 @@
+name: Fix cinematic hero rendering
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-hero-render.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render cinematic hero as HTML
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("app.py")
+          text = path.read_text(encoding="utf-8")
+          start_marker = 'st.markdown(\n    f"""\n    <section class="ng-cinema">'
+          end_marker = '\nif not workflow.llm.available:'
+
+          start = text.find(start_marker)
+          end = text.find(end_marker, start)
+          if start == -1 or end == -1:
+              raise SystemExit("Hero block markers were not found")
+
+          block = text[start:end]
+          block = block.replace('st.markdown(', 'st.html(', 1)
+          closing = ',\n    unsafe_allow_html=True,\n)'
+          if closing not in block:
+              raise SystemExit("Expected Streamlit markdown closing was not found")
+          block = block.replace(closing, '\n)', 1)
+
+          path.write_text(text[:start] + block + text[end:], encoding="utf-8")
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.py
+          git diff --cached --quiet && exit 0
+          git commit -m "Fix cinematic hero HTML rendering"
+          git push
