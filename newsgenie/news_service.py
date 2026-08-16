@@ -109,7 +109,7 @@ class NewsService:
             "https://news.google.com/rss/search?q=" + quote_plus(q)
             + "&hl=en-US&gl=US&ceid=US:en"
         )
-        response = requests.get(rss_url, timeout=self.timeout, headers={"User-Agent": "NewsGenie/1.0"})
+        response = requests.get(rss_url, timeout=self.timeout, headers={"User-Agent": "HaddishSignal/1.0"})
         response.raise_for_status()
         root = ET.fromstring(response.content)
         items: list[NewsItem] = []

@@ -34,7 +34,7 @@ class LLMService:
 
         if self.available:
             prompt = f"""
-You route requests for NewsGenie. Return ONLY JSON with keys route and category.
+You route requests for Haddish Signal. Return ONLY JSON with keys route and category.
 route must be either \"news\" or \"general\".
 category must be one of \"technology\", \"finance\", \"sports\", \"politics\", \"general\".
 Choose news when the user asks for headlines, current events, latest developments, or an update.
@@ -82,7 +82,7 @@ User query: {query}
                 for i, a in enumerate(articles[:8])
             )
             prompt = f"""
-You are NewsGenie, a careful news assistant. Answer the user's news request using ONLY the supplied article metadata.
+You are Haddish Signal, a careful news assistant. Answer the user's news request using ONLY the supplied article metadata.
 - Lead with a concise category update.
 - List 3-5 important stories.
 - Attribute every story to its source and preserve uncertainty.
@@ -115,7 +115,7 @@ Articles:
                 for i, r in enumerate(results[:6])
             ) or "No web search results were available."
             prompt = f"""
-You are NewsGenie, a concise information assistant.
+You are Haddish Signal, a concise information assistant.
 Use the retrieved web context when it is available. Distinguish established facts from uncertain or incomplete information.
 If context is insufficient, say so rather than inventing details. Include source names/links from the provided context when relevant.
 Use recent conversation only to resolve follow-up references.

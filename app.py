@@ -13,8 +13,8 @@ from newsgenie.demo_data import SAMPLE_NEWS
 
 
 st.set_page_config(
-    page_title="NewsGenie | Haddish Redahegn",
-    page_icon="📰",
+    page_title="Haddish Signal | AI News Intelligence",
+    page_icon="assets/haddish_signal_icon.svg",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -303,7 +303,7 @@ with st.sidebar:
     st.markdown(
         """
         <div class="ng-sidebar-brand">
-          <div class="ng-sidebar-logo">📰 NewsGenie</div>
+          <div class="ng-sidebar-logo">◉ Haddish Signal</div>
           <div class="ng-sidebar-sub">AI-powered information, live-news retrieval, and source-aware answers.</div>
           <div class="ng-sidebar-owner">Built by Haddish Redahegn</div>
         </div>
@@ -332,7 +332,7 @@ st.html(
       <div class="ng-cinema-inner">
         <div>
           <div class="ng-kicker"><span class="ng-kicker-dot"></span> LIVE INTELLIGENCE WORKSPACE</div>
-          <h1 class="ng-title">News<span>Genie</span></h1>
+          <h1 class="ng-title">Haddish<span> Signal</span></h1>
           <div class="ng-owner">Created by <b>Haddish Redahegn</b></div>
           <div class="ng-copy">
             Navigate the news cycle with an AI-assisted verification workflow that separates
@@ -397,7 +397,7 @@ st.html(
 
 if not workflow.llm.available:
     st.info(
-        "NewsGenie is running in source-first mode. Live news and web retrieval still work; "
+        "Haddish Signal is running in source-first mode. Live news and web retrieval still work; "
         "adding an OpenAI API key in Streamlit Secrets enables conversational AI synthesis."
     )
 
@@ -437,7 +437,7 @@ with tab_chat:
                     for item in result["search_results"][:5]:
                         st.markdown(f"- [{item['title']}]({item['url']})")
             if result.get("error"):
-                st.warning("A retrieval step failed, so NewsGenie used its fallback path where possible.")
+                st.warning("A retrieval step failed, so Haddish Signal used its fallback path where possible.")
         st.session_state.messages.append({"role": "assistant", "content": result.get("answer", "")})
 
 with tab_news:
@@ -504,6 +504,6 @@ Streamlit Session State retains recent conversation messages across reruns.""",
     )
 
 st.markdown(
-    "<div class='ng-footer'>NewsGenie · Designed and developed by <strong>Haddish Redahegn</strong></div>",
+    "<div class='ng-footer'>Haddish Signal · Designed and developed by <strong>Haddish Redahegn</strong></div>",
     unsafe_allow_html=True,
 )
