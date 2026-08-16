@@ -1,0 +1,7 @@
+streamlit>=1.42
+langgraph>=1.2
+langchain-openai>=1.0
+requests>=2.32
+pydantic>=2.10
+ddgs>=9.12
+python-dotenv>=1.0
