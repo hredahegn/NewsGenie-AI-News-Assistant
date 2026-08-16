@@ -1,6 +1,6 @@
-# NewsGenie — AI-Powered Information & News Assistant
+# Haddish Signal — AI-Powered News & Information Assistant
 
-NewsGenie is a Streamlit + LangGraph application that distinguishes general information questions from current-news requests, retrieves external information, preserves conversation context, and exposes its sources.
+Haddish Signal is a Streamlit + LangGraph application created by Haddish Redahegn. It distinguishes general information questions from current-news requests, retrieves external information, preserves conversation context, and exposes its sources.
 
 ## Live-use architecture
 
@@ -9,6 +9,7 @@ NewsGenie is a Streamlit + LangGraph application that distinguishes general info
 - **AI synthesis:** OpenAI when configured; otherwise source-first deterministic output
 - **Workflow:** LangGraph
 - **UI/session:** Streamlit
+- **Live categories:** Technology, Finance, Sports, and Politics
 
 ## Run locally
 
@@ -23,4 +24,4 @@ See `DEPLOYMENT.md`. API keys are read only from server-side Streamlit Secrets o
 
 ## Important limitation
 
-NewsGenie reduces misinformation risk through transparent sourcing, recency, deduplication, fallback handling, and provenance indicators. It does not claim to automatically determine whether every report is true.
+Haddish Signal reduces misinformation risk through transparent sourcing, recency, deduplication, fallback handling, and provenance indicators. It does not claim to automatically determine whether every report is true.
