@@ -354,7 +354,7 @@ news_sub = "Live headline retrieval"
 web_value = "Tavily + DDGS" if tavily_key else "DDGS"
 web_sub = "General web retrieval"
 
-st.markdown(
+st.html(
     f"""
     <section class="ng-cinema">
       <div class="ng-cinema-inner">
@@ -420,8 +420,7 @@ st.markdown(
         <div class="ng-status-sub">{web_sub}</div>
       </div>
     </div>
-    """,
-    unsafe_allow_html=True,
+    """
 )
 
 if not workflow.llm.available:
