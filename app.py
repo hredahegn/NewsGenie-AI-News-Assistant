@@ -310,7 +310,7 @@ with st.sidebar:
         """,
         unsafe_allow_html=True,
     )
-    category = st.selectbox("News category", ["auto", "technology", "finance", "sports"], index=0)
+    category = st.selectbox("News category", ["auto", "technology", "finance", "sports", "politics"], index=0)
     st.markdown("#### Service status")
     st.caption("Credentials remain server-side and are never entered by visitors.")
     if st.button("Clear conversation", use_container_width=True):
@@ -442,7 +442,7 @@ with tab_chat:
 
 with tab_news:
     st.markdown("<div class='ng-section-title'>Live category intelligence</div>", unsafe_allow_html=True)
-    selected = st.radio("Choose a category", ["technology", "finance", "sports"], horizontal=True)
+    selected = st.radio("Choose a category", ["technology", "finance", "sports", "politics"], horizontal=True)
     topic = st.text_input(
         "Optional topic filter",
         placeholder="e.g., artificial intelligence, interest rates, Premier League",
@@ -470,7 +470,10 @@ with tab_news:
             )
     else:
         st.info("Press Refresh live news for a current retrieval. Captured project samples are shown below until then.")
-        for item in SAMPLE_NEWS[selected]:
+        samples = SAMPLE_NEWS.get(selected, [])
+        if not samples:
+            st.caption("Politics is configured for live retrieval. Click Refresh live news to fetch current headlines.")
+        for item in samples:
             st.markdown(
                 f"<div class='ng-card'><b>{item['title']}</b><br>"
                 f"<span class='ng-muted'>{item['source']} · captured {item['published_at']}</span><br>"

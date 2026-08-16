@@ -14,6 +14,7 @@ CATEGORY_MAP = {
     "technology": "technology",
     "finance": "business",
     "sports": "sports",
+    "politics": "general",
     "general": "general",
 }
 
@@ -21,6 +22,7 @@ RSS_QUERY_MAP = {
     "technology": "technology AI software chips",
     "finance": "finance markets economy stocks",
     "sports": "sports",
+    "politics": "politics government elections congress White House",
     "general": "top news",
 }
 
@@ -75,6 +77,8 @@ class NewsService:
         }
         if query:
             params["q"] = query[:200]
+        elif category == "politics":
+            params["q"] = "politics government elections congress White House"
         response = requests.get(endpoint, params=params, timeout=self.timeout)
         response.raise_for_status()
         payload = response.json()

@@ -8,6 +8,12 @@ def test_rule_based_news_routing():
     assert result == {"route": "news", "category": "technology"}
 
 
+def test_rule_based_politics_routing():
+    llm = LLMService(api_key=None)
+    result = llm.classify("Give me the latest politics news")
+    assert result == {"route": "news", "category": "politics"}
+
+
 def test_rule_based_general_routing():
     llm = LLMService(api_key=None)
     result = llm.classify("Explain what a large language model is")

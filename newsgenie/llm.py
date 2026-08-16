@@ -29,14 +29,14 @@ class LLMService:
 
     def classify(self, query: str, history: str = "", selected_category: str = "auto") -> dict[str, str]:
         selected = (selected_category or "auto").lower()
-        if selected in {"technology", "finance", "sports"}:
+        if selected in {"technology", "finance", "sports", "politics"}:
             return {"route": "news", "category": selected}
 
         if self.available:
             prompt = f"""
 You route requests for NewsGenie. Return ONLY JSON with keys route and category.
 route must be either \"news\" or \"general\".
-category must be one of \"technology\", \"finance\", \"sports\", \"general\".
+category must be one of \"technology\", \"finance\", \"sports\", \"politics\", \"general\".
 Choose news when the user asks for headlines, current events, latest developments, or an update.
 Use prior conversation only to resolve follow-ups.
 
@@ -52,7 +52,7 @@ User query: {query}
                     data = json.loads(match.group(0))
                     route = data.get("route")
                     category = data.get("category")
-                    if route in {"news", "general"} and category in {"technology", "finance", "sports", "general"}:
+                    if route in {"news", "general"} and category in {"technology", "finance", "sports", "politics", "general"}:
                         return {"route": route, "category": category}
             except Exception:
                 pass
@@ -66,6 +66,8 @@ User query: {query}
             category = "finance"
         elif any(w in q for w in ["sports", "sport", "football", "soccer", "nba", "nfl", "mlb", "wnba", "tennis", "cricket"]):
             category = "sports"
+        elif any(w in q for w in ["politics", "political", "election", "elections", "president", "congress", "senate", "house", "government", "white house", "campaign", "vote", "voting", "democrat", "republican"]):
+            category = "politics"
         route = "news" if any(w in q for w in news_words) else "general"
         if category != "general" and any(w in q for w in {"latest", "news", "update", "today", "headline", "headlines"}):
             route = "news"
