@@ -1,0 +1,34 @@
+{
+  "id": "./",
+  "name": "Haddish Signal",
+  "short_name": "Haddish Signal",
+  "description": "AI-powered news intelligence, live retrieval, and source-aware answers by Haddish Redahegn.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F8FBFF",
+  "theme_color": "#2F73F2",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "categories": ["news", "productivity"],
+  "icons": [
+    {
+      "src": "icons/haddish-signal.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/haddish-signal.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/haddish-signal-maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
