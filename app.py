@@ -11,13 +11,15 @@ from newsgenie.web_search import WebSearchService
 from newsgenie.workflow import NewsGenieWorkflow
 from newsgenie.demo_data import SAMPLE_NEWS
 
-st.set_page_config(page_title="NewsGenie", page_icon="📰", layout="wide")
+st.set_page_config(page_title="NewsGenie | Haddish Redahegn", page_icon="📰", layout="wide")
 
 st.markdown(
     """
     <style>
     .ng-card {border:1px solid rgba(120,120,120,.25);border-radius:14px;padding:14px 16px;margin:10px 0;}
     .ng-muted {opacity:.72;font-size:.9rem;}
+    .ng-creator {font-size:.95rem;opacity:.82;margin-top:-.35rem;margin-bottom:1.15rem;}
+    .ng-footer {text-align:center;opacity:.62;font-size:.85rem;padding:2rem 0 .5rem 0;}
     </style>
     """,
     unsafe_allow_html=True,
@@ -62,6 +64,7 @@ model = _secret("OPENAI_MODEL", "gpt-5-mini")
 with st.sidebar:
     st.title("📰 NewsGenie")
     st.caption("AI-Powered Information & News Assistant")
+    st.markdown("**Built by Haddish Redahegn**")
     category = st.selectbox("News category", ["auto", "technology", "finance", "sports"], index=0)
     st.markdown("#### Service status")
     st.caption("Credentials are stored server-side and are never entered by visitors.")
@@ -72,6 +75,7 @@ with st.sidebar:
 workflow = get_workflow(openai_key, news_key, tavily_key, model)
 
 st.title("📰 NewsGenie")
+st.markdown("<div class='ng-creator'>Created by <strong>Haddish Redahegn</strong></div>", unsafe_allow_html=True)
 st.subheader("Reliable context, current news, and quick information in one assistant")
 st.caption("Routes each request through a LangGraph workflow that distinguishes news from general information queries.")
 
@@ -181,3 +185,5 @@ Streamlit Session State retains recent conversation messages across reruns.""",
         "- Duplicate headlines are removed before display.\n"
         "- API credentials stay server-side and are not exposed to visitors."
     )
+
+st.markdown("<div class='ng-footer'>NewsGenie · Designed and developed by <strong>Haddish Redahegn</strong></div>", unsafe_allow_html=True)
