@@ -259,8 +259,29 @@ div[data-baseweb="select"]>div,.stTextInput input{
 .ng-footer{text-align:center;color:#7b8ea1;font-size:.8rem;padding:2.4rem 0 .5rem;}.ng-footer strong{color:#3b536b;}
 
 @media(max-width:900px){
-  .ng-cinema-inner{grid-template-columns:1fr;padding:1.6rem;min-height:auto}.ng-stage{height:310px;margin-top:.5rem}
+  .ng-cinema-inner{grid-template-columns:1fr;padding:1.45rem;min-height:auto;gap:1rem}
+  .ng-stage{
+    height:auto;margin-top:.75rem;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.8rem;perspective:none;transform-style:flat;
+  }
+  .ng-orbit,.ng-core,.ng-beam{display:none}
+  .ng-float,.f1,.f2,.f3,.f4{
+    position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;min-width:0;
+    transform:none!important;padding:.9rem 1rem;border-radius:18px;
+  }
+  .ng-float:hover{transform:translateY(-2px)!important}
   .ng-statusbar{grid-template-columns:1fr}.ng-title{font-size:3rem}
+}
+@media(max-width:600px){
+  .ng-cinema{border-radius:24px;min-height:auto}
+  .ng-cinema-inner{padding:1.1rem}
+  .ng-stage{grid-template-columns:1fr;gap:.7rem}
+  .ng-title{font-size:2.65rem}
+  .ng-copy{font-size:.96rem;line-height:1.6}
+  .ng-pills{gap:.4rem}
+  .ng-pill{font-size:.72rem;padding:.4rem .62rem}
+  .ng-float .value{font-size:1rem}
+  .ng-float .tiny{font-size:.75rem;line-height:1.45}
 }
     </style>
     """,
@@ -446,11 +467,11 @@ with tab_chat:
 with tab_news:
     st.markdown("<div class='ng-section-title'>Live category intelligence</div>", unsafe_allow_html=True)
     selected = st.radio(
-    "Choose a category",
-    ["technology", "finance", "sports", "politics"],
-    index=3,
-    horizontal=True,
-)
+        "Choose a category",
+        ["technology", "finance", "sports", "politics"],
+        index=3,
+        horizontal=True,
+    )
     topic = st.text_input(
         "Optional topic filter",
         placeholder="e.g., artificial intelligence, interest rates, Premier League",
