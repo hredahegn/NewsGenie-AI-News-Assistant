@@ -5,3 +5,5 @@ requests>=2.32
 pydantic>=2.10
 ddgs>=9.12
 python-dotenv>=1.0
+
+# Rebuild marker: live-news freshness v2 (2026-08-18)
