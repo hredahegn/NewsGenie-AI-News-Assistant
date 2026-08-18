@@ -1,10 +1,9 @@
 name: Fix Haddish Signal mobile hero
 
-# one-time responsive layout update
 on:
   push:
-    paths:
-      - '.github/workflows/fix-mobile-hero.yml'
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -52,9 +51,12 @@ jobs:
   .ng-float .value{font-size:1rem}
   .ng-float .tiny{font-size:.75rem;line-height:1.45}
 }'''
-          if old not in text:
+          if old in text:
+              app.write_text(text.replace(old, new))
+          elif '.ng-orbit,.ng-core,.ng-beam{display:none}' in text:
+              print('Mobile fix already present')
+          else:
               raise SystemExit('Expected mobile media block not found')
-          app.write_text(text.replace(old, new))
           PY
 
       - name: Verify syntax and mobile rules
@@ -68,5 +70,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add app.py
-          git commit -m "Fix Haddish Signal mobile hero card overlap"
-          git push
+          if git diff --cached --quiet; then
+            echo "No app changes needed"
+          else
+            git commit -m "Fix Haddish Signal mobile hero card overlap"
+            git push
+          fi
