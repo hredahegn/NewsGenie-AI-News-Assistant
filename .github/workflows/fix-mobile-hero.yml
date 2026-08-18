@@ -1,5 +1,6 @@
 name: Fix Haddish Signal mobile hero
 
+# one-time responsive layout update
 on:
   push:
     paths:
