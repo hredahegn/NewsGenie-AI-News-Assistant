@@ -1,0 +1,75 @@
+name: Set Haddish Signal live politics defaults
+
+on:
+  push:
+    paths:
+      - '.github/workflows/set-live-politics-default.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-defaults:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update app defaults
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          app = Path('app.py')
+          text = app.read_text()
+
+          old_tabs = 'tab_chat, tab_news, tab_design = st.tabs(["💬 Assistant", "⚡ Live News", "🧭 How it works"])'
+          new_tabs = '''tab_chat, tab_news, tab_design = st.tabs(
+              ["💬 Assistant", "⚡ Live News", "🧭 How it works"],
+              default="⚡ Live News",
+          )'''
+          if old_tabs not in text and 'default="⚡ Live News"' not in text:
+              raise SystemExit('Expected st.tabs line not found')
+          text = text.replace(old_tabs, new_tabs)
+
+          old_radio = 'selected = st.radio("Choose a category", ["technology", "finance", "sports", "politics"], horizontal=True)'
+          new_radio = '''selected = st.radio(
+              "Choose a category",
+              ["technology", "finance", "sports", "politics"],
+              index=3,
+              horizontal=True,
+          )'''
+          if old_radio not in text and 'index=3' not in text:
+              raise SystemExit('Expected category radio line not found')
+          text = text.replace(old_radio, new_radio)
+          app.write_text(text)
+
+          req = Path('requirements.txt')
+          req_text = req.read_text()
+          req_text = req_text.replace('streamlit>=1.42', 'streamlit>=1.50')
+          req.write_text(req_text)
+          PY
+
+      - name: Verify syntax and defaults
+        run: |
+          python -m py_compile app.py
+          grep -F 'default="⚡ Live News"' app.py
+          grep -F 'index=3' app.py
+          grep -F 'streamlit>=1.50' requirements.txt
+
+      - name: Run tests
+        run: |
+          python -m pip install -q -r requirements.txt
+          python -m pytest -q
+
+      - name: Commit update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.py requirements.txt
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "Default Haddish Signal to Live News and Politics"
+            git push
+          fi
