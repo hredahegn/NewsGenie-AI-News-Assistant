@@ -1,5 +1,6 @@
 name: Set Haddish Signal live politics defaults
 
+# Trigger helper after workflow exists on main.
 on:
   push:
     paths:
