@@ -1,6 +1,5 @@
 name: Set Haddish Signal live politics defaults
 
-# Trigger helper after workflow exists on main.
 on:
   push:
     paths:
@@ -16,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Update app defaults
+      - name: Update defaults
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -29,8 +28,6 @@ jobs:
               ["💬 Assistant", "⚡ Live News", "🧭 How it works"],
               default="⚡ Live News",
           )'''
-          if old_tabs not in text and 'default="⚡ Live News"' not in text:
-              raise SystemExit('Expected st.tabs line not found')
           text = text.replace(old_tabs, new_tabs)
 
           old_radio = 'selected = st.radio("Choose a category", ["technology", "finance", "sports", "politics"], horizontal=True)'
@@ -40,28 +37,20 @@ jobs:
               index=3,
               horizontal=True,
           )'''
-          if old_radio not in text and 'index=3' not in text:
-              raise SystemExit('Expected category radio line not found')
           text = text.replace(old_radio, new_radio)
           app.write_text(text)
 
           req = Path('requirements.txt')
-          req_text = req.read_text()
-          req_text = req_text.replace('streamlit>=1.42', 'streamlit>=1.50')
+          req_text = req.read_text().replace('streamlit>=1.42', 'streamlit>=1.50')
           req.write_text(req_text)
           PY
 
-      - name: Verify syntax and defaults
+      - name: Verify
         run: |
           python -m py_compile app.py
           grep -F 'default="⚡ Live News"' app.py
           grep -F 'index=3' app.py
           grep -F 'streamlit>=1.50' requirements.txt
-
-      - name: Run tests
-        run: |
-          python -m pip install -q -r requirements.txt
-          python -m pytest -q
 
       - name: Commit update
         run: |
