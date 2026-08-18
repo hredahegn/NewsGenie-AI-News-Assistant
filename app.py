@@ -401,7 +401,10 @@ if not workflow.llm.available:
         "adding an OpenAI API key in Streamlit Secrets enables conversational AI synthesis."
     )
 
-tab_chat, tab_news, tab_design = st.tabs(["💬 Assistant", "⚡ Live News", "🧭 How it works"])
+tab_chat, tab_news, tab_design = st.tabs(
+    ["💬 Assistant", "⚡ Live News", "🧭 How it works"],
+    default="⚡ Live News",
+)
 
 with tab_chat:
     for msg in st.session_state.messages:
@@ -442,7 +445,12 @@ with tab_chat:
 
 with tab_news:
     st.markdown("<div class='ng-section-title'>Live category intelligence</div>", unsafe_allow_html=True)
-    selected = st.radio("Choose a category", ["technology", "finance", "sports", "politics"], horizontal=True)
+    selected = st.radio(
+    "Choose a category",
+    ["technology", "finance", "sports", "politics"],
+    index=3,
+    horizontal=True,
+)
     topic = st.text_input(
         "Optional topic filter",
         placeholder="e.g., artificial intelligence, interest rates, Premier League",
